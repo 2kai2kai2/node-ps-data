@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "node-gyp rebuild",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Build Raw C++ test_win",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-I", "${workspaceFolder}/node_modules/node-addon-api",
+                "-g", "test/test_win.cpp",
+                "-o", "test/test_win",
+                "-l", "psapi",
+                "-Wall", "-Wextra"
+            ],
+            "group":  "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Raw C++ test_linux",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-I", "${workspaceFolder}/node_modules/node-addon-api",
+                "-g", "test/test_linux.cpp",
+                "-o", "test/test_linux",
+                "-Wall", "-Wextra"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
