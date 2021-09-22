@@ -5,7 +5,7 @@
     "name": "kaih2o",
     "url": "https://github.com/2kai2kai2"
   },
-  "version": "1.0.8",
+  "version": "1.0.9",
   "keywords": [
     "process",
     "processes",
@@ -32,8 +32,7 @@
   "module": "commonjs",
   "scripts": {
     "build-ts": "./node_modules/.bin/tsc",
-    "build-linux": "./node_modules/.bin/prebuildify --napi --strip -m --platform linux",
-    "build-win": "./node_modules/.bin/prebuildify --napi --strip -m --platform win32",
+    "build-gyp": "./node_modules/.bin/prebuildify --napi --strip -m",
     "install": "./node_modules/.bin/node-gyp-build"
   },
   "type": "commonjs",
