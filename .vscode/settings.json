@@ -81,6 +81,7 @@
         "xtree": "cpp"
     },
     "C_Cpp.default.includePath": [
-        "${workspaceFolder}/node_modules/node-addon-api"
+        "${workspaceFolder}/node_modules/node-addon-api",
+        "${workspaceFolder}"
     ]
 }

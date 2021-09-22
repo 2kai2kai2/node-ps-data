@@ -1,43 +1,11 @@
 {
-  "_args": [
-    [
-      "node-ps-data@1.0.4",
-      "C:\\Users\\2kai2\\OneDrive\\Documents\\GitHub\\VSCode-Python-Resource-Monitor"
-    ]
-  ],
-  "_from": "node-ps-data@1.0.4",
-  "_id": "node-ps-data@1.0.4",
-  "_inBundle": false,
-  "_integrity": "sha512-jUMau5pAnZ9y8n/yw1x/T4X8PDiR9DZNF+Fgte8s8tq5wYuqxxwgSLDBGxKU6F/p1qlIFSNKrqLt5fMSbR0Eqw==",
-  "_location": "/node-ps-data",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "node-ps-data@1.0.4",
-    "name": "node-ps-data",
-    "escapedName": "node-ps-data",
-    "rawSpec": "1.0.4",
-    "saveSpec": null,
-    "fetchSpec": "1.0.4"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/node-ps-data/-/node-ps-data-1.0.4.tgz",
-  "_spec": "1.0.4",
-  "_where": "C:\\Users\\2kai2\\OneDrive\\Documents\\GitHub\\VSCode-Python-Resource-Monitor",
-  "author": {
-    "name": "kaih2o"
-  },
+  "name": "node-ps-data",
   "description": "Gets data about running processes by process id",
-  "devDependencies": {
-    "@types/node": "^15.12.1",
-    "node-addon-api": "^3.2.1",
-    "node-gyp": "^8.2.0",
-    "typescript": "^4.3.2"
+  "author": {
+    "name": "kaih2o",
+    "url": "https://github.com/2kai2kai2"
   },
-  "gypfile": true,
+  "version": "1.0.5",
   "keywords": [
     "process",
     "processes",
@@ -45,20 +13,30 @@
     "pid",
     "lookup"
   ],
-  "license": "GNU GPL",
-  "main": "index.js",
-  "module": "commonjs",
-  "name": "node-ps-data",
+  "repository": {
+    "url": "https://github.com/2kai2kai2/node-ps-data"
+  },
+  "dependencies": {
+    "node-gyp": "^8.2.0",
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1",
+    "node-addon-api": "^3.2.1",
+    "typescript": "^4.3.2",
+  },
   "optionalDependencies": {
     "trim-newlines": "^4.0.2",
     "mem": "^9.0.1",
     "windows-build-tools": "^5.2.2"
   },
+  "gypfile": true,
+  "license": "GNU GPL",
+  "main": "index.js",
+  "module": "commonjs",
   "scripts": {
-    "build": "tsc",
     "install": "node-gyp rebuild"
+    "build-ts": "./node_modules/.bin/tsc",
   },
   "type": "commonjs",
-  "types": "index.d.ts",
-  "version": "1.0.5"
+  "types": "index.d.ts"
 }

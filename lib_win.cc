@@ -1,11 +1,12 @@
 #include <Windows.h>
 #include <psapi.h>
 #include <iostream>
+#include "lib.h"
 
 /**
 Gets the CPU time used by a process in milliseconds.
  */
-ULONG64 cpuTimeCpp(const size_t &pid) {
+size_t cpuTimeCpp(const size_t &pid) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, true, pid);
     if (process == NULL) {
         std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting cpu data." << std::endl;
@@ -38,7 +39,7 @@ ULONG64 cpuTimeCpp(const size_t &pid) {
 Gets working set size (memory) in bytes. Includes both private and shared working sets.
 Note that this is different from the value in the task manager, because that excludes the shared working set.
 */
-ULONG64 memInfoCpp(const size_t &pid) {
+size_t memInfoCpp(const size_t &pid) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
     if (process == NULL) {
         std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting memory data." << std::endl; 

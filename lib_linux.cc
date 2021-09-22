@@ -3,15 +3,16 @@
 #include <sys/time.h>
 #include <iostream>
 #include <limits>
+#include "lib.h"
 
 /**
 Gets the CPU time used by a process in milliseconds.
  */
-long long cpuTimeCpp(const size_t &pid) {
+size_t cpuTimeCpp(const size_t &pid) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/stat");
     // Check that this pid is valid
     if (!file.good()) {
-        return -1;
+        return 0;
     }
     std::string temp;
     // 1 - pid
@@ -47,11 +48,11 @@ Memory size in bytes
 Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to physical (RAM) or 'virtual' memory on disk.
 Retrieved from /proc/[pid]/statm
  */
-long long memInfoCpp(const size_t &pid) {
+size_t memInfoCpp(const size_t &pid) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/statm");
     // Check that this pid is valid
     if (!file.good()) {
-        return -1;
+        return 0;
     }
     std::string temp;
     // 1-5 - size of various other parts (code, shared pages, )

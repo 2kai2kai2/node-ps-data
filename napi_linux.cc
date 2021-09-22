@@ -1,4 +1,4 @@
-#include "lib_linux.cc"
+#include "lib.h"
 #include <napi.h>
 
 Napi::Number cpuTime(const Napi::CallbackInfo &info) {
