@@ -6,8 +6,3 @@
 ## Features
 - `cpuTime(pid)`: Get total CPU usage for a process in milliseconds.
 - `memInfo(pid)`: Get current memory usage for a process in bytes.
-
-## Node-GYP issues
-[All](https://github.com/nodejs/node-gyp#Installation)
-
-[Additional Windows Help](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules)
