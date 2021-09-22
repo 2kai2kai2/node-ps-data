@@ -1,0 +1,36 @@
+# This is partially based on the prebuild workflow used by node-canvas
+
+name: Build binaries
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2 # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
+      - name: Load dependencies
+        run: npm install --ignore-scripts
+      - name: Build
+        run: npm run build-gyp
+  build_win:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Load dependencies
+        run: npm install --ignore-scripts
+      - name: Build
+        run: npm run build-gyp
