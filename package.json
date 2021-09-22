@@ -26,13 +26,8 @@
     "typescript": "^4.4.3",
     "prebuildify": "^4.2.0"
   },
-  "optionalDependencies": {
-    "trim-newlines": "^4.0.2",
-    "mem": "^9.0.1",
-    "windows-build-tools": "^5.2.2"
-  },
   "gypfile": true,
-  "license": "GNU GPL",
+  "license": "GPL-3.0-or-later",
   "main": "index.js",
   "module": "commonjs",
   "scripts": {
