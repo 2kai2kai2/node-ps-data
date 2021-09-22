@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.memInfo = exports.cpuTime = void 0;
-var addon = require("./build/Release/node_ps_data");
+var addon = require("node-gyp-build")("./build/Release/node_ps_data");
 /**
  * @param pid Process ID to search for.
  * @returns Process CPU usage time in ms.

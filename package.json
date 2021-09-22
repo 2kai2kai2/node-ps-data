@@ -18,11 +18,13 @@
   },
   "dependencies": {
     "node-gyp": "^8.2.0",
+    "node-gyp-build": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^15.12.1",
     "node-addon-api": "^3.2.1",
     "typescript": "^4.3.2",
+    "prebuildify": "^4.2.0"
   },
   "optionalDependencies": {
     "trim-newlines": "^4.0.2",
@@ -34,8 +36,9 @@
   "main": "index.js",
   "module": "commonjs",
   "scripts": {
-    "install": "node-gyp rebuild"
     "build-ts": "./node_modules/.bin/tsc",
+    "build-gyp": "./node_modules/.bin/prebuildify --napi --strip -m",
+    "install": "./node_modules/.bin/node-gyp-build"
   },
   "type": "commonjs",
   "types": "index.d.ts"

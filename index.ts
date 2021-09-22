@@ -1,4 +1,4 @@
-const addon = require("./build/Release/node_ps_data");
+const addon = require("node-gyp-build")("./build/Release/node_ps_data");
 
 /**
  * @param pid Process ID to search for.
