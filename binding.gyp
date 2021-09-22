@@ -3,7 +3,7 @@
         ["OS=='win'", {
             "targets": [{
                     "target_name": "node_ps_data",
-                    "sources": ["napi_win.cc", "lib_win.cc"],
+                    "sources": ["napi.cc", "lib_win.cc"],
                     "include_dirs": ["./node_modules/node-addon-api"],
                     "ldflags": [
                         "-lpsapi" # gcc/g++
@@ -23,7 +23,7 @@
         "OS=='linux'", {
             "targets": [{
                     "target_name": "node_ps_data",
-                    "sources": ["napi_linux.cc", "lib_linux.cc"],
+                    "sources": ["napi.cc", "lib_linux.cc"],
                     "include_dirs": ["./node_modules/node-addon-api"],
                     "cflags!": [ "-fno-exceptions" ],
                     "cflags_cc!": [ "-fno-exceptions" ]
