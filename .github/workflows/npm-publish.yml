@@ -43,7 +43,6 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           path: prebuilds/
-      - run: ls -R
-      - run: npm publish --dry-run
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
