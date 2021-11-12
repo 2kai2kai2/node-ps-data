@@ -3,3 +3,4 @@ node-addon-api/
 build/
 test/test_linux
 test/test_win.exe
+prebuilds/

@@ -5,7 +5,7 @@
     "name": "kaih2o",
     "url": "https://github.com/2kai2kai2"
   },
-  "version": "1.0.10",
+  "version": "1.0.11",
   "keywords": [
     "process",
     "processes",
@@ -17,14 +17,14 @@
     "url": "https://github.com/2kai2kai2/node-ps-data"
   },
   "dependencies": {
-    "node-gyp": "^8.2.0",
+    "node-gyp": "^8.4.0",
     "node-gyp-build": "^4.3.0"
   },
   "devDependencies": {
     "@types/node": "^16.9.6",
     "node-addon-api": "^4.2.0",
-    "typescript": "^4.4.3",
-    "prebuildify": "^4.2.0"
+    "typescript": "^4.4.4",
+    "prebuildify": "^5.0.0"
   },
   "gypfile": true,
   "license": "GPL-3.0-or-later",
@@ -32,7 +32,7 @@
   "module": "commonjs",
   "scripts": {
     "build-ts": "./node_modules/.bin/tsc",
-    "build-gyp": "./node_modules/.bin/prebuildify --napi --strip -m",
+    "prebuild": "./node_modules/.bin/prebuildify --napi --strip -m",
     "install": "./node_modules/.bin/node-gyp-build"
   },
   "type": "commonjs",
