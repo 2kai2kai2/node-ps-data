@@ -40,6 +40,8 @@ jobs:
         with:
           node-version: '14'
           registry-url: https://registry.npmjs.org/
+      - run: npm install
+      - run: mkdir prebuilds
       - uses: actions/download-artifact@v2
         with:
           name: linux-x64
@@ -48,7 +50,7 @@ jobs:
         with:
           name: win32-x64
           path: prebuilds/
-      - run: npm install
+      - run: ls -R
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
