@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install
+      - run: npm install --ignore-scripts
       - run: npm run prebuild
       - uses: actions/upload-artifact@v2
         with:
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install
+      - run: npm install --ignore-scripts
       - run: npm run prebuild
       - uses: actions/upload-artifact@v2
         with:
@@ -44,6 +44,6 @@ jobs:
         with:
           path: prebuilds/
       - run: ls -R
-      - run: npm publish
+      - run: npm publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
