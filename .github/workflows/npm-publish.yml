@@ -40,15 +40,8 @@ jobs:
         with:
           node-version: '14'
           registry-url: https://registry.npmjs.org/
-      - run: npm install
-      - run: mkdir prebuilds
       - uses: actions/download-artifact@v2
         with:
-          name: linux-x64
-          path: prebuilds/
-      - uses: actions/download-artifact@v2
-        with:
-          name: win32-x64
           path: prebuilds/
       - run: ls -R
       - run: npm publish
