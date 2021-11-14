@@ -14,8 +14,6 @@
 ![License GPL-3.0](https://img.shields.io/github/license/2kai2kai2/node-ps-data)
 ](https://github.com/2kai2kai2/node-ps-data/blob/main/LICENSE)
 
-----
-
 ## Get data about process resources without executing terminal commands
 - That's right. Unlike existing tools, this module directly retrieves data about processes without needing to open a new shell and wait for a terminal command's response.
 - Supports both Windows and Linux
