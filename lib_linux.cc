@@ -8,11 +8,11 @@
 /**
 Gets the CPU time used by a process in milliseconds.
  */
-size_t cpuTimeCpp(const size_t &pid) {
+bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/stat");
     // Check that this pid is valid
     if (!file.good()) {
-        return 0;
+        return false;
     }
     std::string temp;
     // 1 - pid
@@ -36,7 +36,9 @@ size_t cpuTimeCpp(const size_t &pid) {
     // 16 - awaited child kernel time
     std::getline(file, temp, ' ');
     size_t childkerneltime = std::stoull(temp) * 1000 / sysconf(_SC_CLK_TCK);
-    return usertime + kerneltime;
+    user = usertime;
+    kernel = kerneltime;
+    return true;
 }
 
 // /proc/[pid]/io : file io stats

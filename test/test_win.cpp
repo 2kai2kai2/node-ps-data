@@ -2,6 +2,9 @@
 #include <iostream>
 
 int main() {
-    std::cout << cpuTimeCpp(2724) << std::endl;
-    std::cout << memInfoCpp(2724) << std::endl;
+    size_t user, kernel;
+    cpuTimeCpp(1, user, kernel);
+    std::cout << user << std::endl;
+    std::cout << kernel << std::endl;
+    std::cout << memInfoCpp(1) << std::endl;
 }

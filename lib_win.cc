@@ -6,11 +6,11 @@
 /**
 Gets the CPU time used by a process in milliseconds.
  */
-size_t cpuTimeCpp(const size_t &pid) {
+bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, true, pid);
     if (process == NULL) {
         std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting cpu data." << std::endl;
-        return 0;
+        return false;
     }
 
     // Get data
@@ -18,7 +18,7 @@ size_t cpuTimeCpp(const size_t &pid) {
     if (!GetProcessTimes(process, &creationtime, &exittime, &kerneltime, &usertime)) {
         std::cerr << GetLastError() << std::endl;
         CloseHandle(process);
-        return 0;
+        return false;
     }
     CloseHandle(process);
     // Transform data into 64-bit number (ULONG64 which is usually unsigned long long)
@@ -29,10 +29,10 @@ size_t cpuTimeCpp(const size_t &pid) {
     userli.LowPart = usertime.dwLowDateTime;
     userli.HighPart = usertime.dwHighDateTime;
 
-    const ULONG64 kernelms = kernelli.QuadPart / 10000;
-    const ULONG64 userms = userli.QuadPart / 10000;
+    kernel = kernelli.QuadPart / 10000;
+    user = userli.QuadPart / 10000;
 
-    return kernelms + userms;
+    return true;
 }
 
 /**

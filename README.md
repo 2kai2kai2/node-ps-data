@@ -21,6 +21,8 @@
 - Prebuilt binaries for `linux-x64` and `win32-x64`
 
 ## Features
+- `cpuUserTime(pid)`: Get user-mode CPU usage for a process in milliseconds.
+- `cpuKernelTime(pid)`: Get kernel/system-mode CPU usage for a process in milliseconds.
 - `cpuTime(pid)`: Get total CPU usage for a process in milliseconds.
 - `memInfo(pid)`: Get current memory usage for a process in bytes.
 
