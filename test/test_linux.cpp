@@ -6,5 +6,8 @@ int main() {
     cpuTimeCpp(1, user, kernel);
     std::cout << user << std::endl;
     std::cout << kernel << std::endl;
-    std::cout << memInfoCpp(1) << std::endl;
+    size_t total, rss;
+    memInfoCpp(1, total, rss);
+    std::cout << total << std::endl;
+    std::cout << rss << std::endl;
 }

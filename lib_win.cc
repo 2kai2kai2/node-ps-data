@@ -1,7 +1,7 @@
-#include <Windows.h>
-#include <psapi.h>
-#include <iostream>
 #include "lib.h"
+#include <Windows.h>
+#include <iostream>
+#include <psapi.h>
 
 /**
 Gets the CPU time used by a process in milliseconds.
@@ -21,7 +21,7 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
         return false;
     }
     CloseHandle(process);
-    // Transform data into 64-bit number (ULONG64 which is usually unsigned long long)
+    // Transform data into 64-bit number
     ULARGE_INTEGER kernelli;
     kernelli.LowPart = kerneltime.dwLowDateTime;
     kernelli.HighPart = kerneltime.dwHighDateTime;
@@ -31,7 +31,6 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 
     kernel = kernelli.QuadPart / 10000;
     user = userli.QuadPart / 10000;
-
     return true;
 }
 
@@ -39,19 +38,22 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 Gets working set size (memory) in bytes. Includes both private and shared working sets.
 Note that this is different from the value in the task manager, because that excludes the shared working set.
 */
-size_t memInfoCpp(const size_t& pid) {
+bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
     if (process == NULL) {
-        std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting memory data." << std::endl; 
-        return 0;
+        std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting memory data." << std::endl;
+        return false;
     }
-    
+
     PROCESS_MEMORY_COUNTERS mem;
     if (!GetProcessMemoryInfo(process, &mem, sizeof(mem))) {
         std::cerr << GetLastError() << std::endl;
         CloseHandle(process);
-        return 0;
+        return false;
     }
     CloseHandle(process);
-    return mem.WorkingSetSize;
+
+    workingSet = mem.WorkingSetSize;
+    total = mem.WorkingSetSize + mem.PagefileUsage;
+    return true;
 }

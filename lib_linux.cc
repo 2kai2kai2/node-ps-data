@@ -1,9 +1,9 @@
+#include "lib.h"
 #include <fstream>
-#include <unistd.h>
-#include <sys/time.h>
 #include <iostream>
 #include <limits>
-#include "lib.h"
+#include <sys/time.h>
+#include <unistd.h>
 
 /**
 Gets the CPU time used by a process in milliseconds.
@@ -14,7 +14,6 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     if (!file.good()) {
         return false;
     }
-    std::string temp;
     // 1 - pid
     file.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
     // 2 - command, may contains spaces? surrounded by () with max length 16
@@ -25,17 +24,24 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
     }
     // 14 - user time
-    std::getline(file, temp, ' ');
-    size_t usertime = std::stoull(temp) * 1000 / sysconf(_SC_CLK_TCK);
+    size_t usertime;
+    file >> usertime;
+    usertime = usertime * 1000 / sysconf(_SC_CLK_TCK);
     // 15 - kernel time
-    std::getline(file, temp, ' ');
-    size_t kerneltime = std::stoull(temp) * 1000 / sysconf(_SC_CLK_TCK);
+    size_t kerneltime;
+    file >> kerneltime;
+    kerneltime = kerneltime * 1000 / sysconf(_SC_CLK_TCK);
+#ifdef FALSE
     // 16 - awaited child user time (not sure if this is needed, but might as well grab it just in case)
-    std::getline(file, temp, ' ');
-    size_t childusertime = std::stoull(temp) * 1000 / sysconf(_SC_CLK_TCK);
+    size_t childusertime;
+    file >> childusertime;
+    childusertime = childusertime * 1000 / sysconf(_SC_CLK_TCK);
     // 16 - awaited child kernel time
-    std::getline(file, temp, ' ');
-    size_t childkerneltime = std::stoull(temp) * 1000 / sysconf(_SC_CLK_TCK);
+    size_t childkerneltime;
+    file >> childkerneltime;
+    childkerneltime = childkerneltime * 1000 / sysconf(_SC_CLK_TCK);
+#endif
+
     user = usertime;
     kernel = kerneltime;
     return true;
@@ -50,21 +56,26 @@ Memory size in bytes
 Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to physical (RAM) or 'virtual' memory on disk.
 Retrieved from /proc/[pid]/statm
  */
-size_t memInfoCpp(const size_t& pid) {
+bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/statm");
     // Check that this pid is valid
     if (!file.good()) {
-        return 0;
+        return false;
     }
-    std::string temp;
-    // 1-5 - size of various other parts (code, shared pages, )
-    for (unsigned char i = 1; i <= 5; ++i) {
+    // 1 - total size
+    size_t size;
+    file >> size;
+    // 2 - RSS (working set; approx.)
+    size_t RSS;
+    file >> RSS;
+    // 3-6 - size of various other parts (code, shared pages, )
+    for (unsigned char i = 3; i <= 6; ++i) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
     }
-    // 6 - data size
-    size_t pages;
-    file >> pages;
-    
+
     file.close();
-    return pages * sysconf(_SC_PAGE_SIZE);
+
+    total = size * sysconf(_SC_PAGE_SIZE);
+    workingSet = RSS * sysconf(_SC_PAGE_SIZE);
+    return true;
 }
