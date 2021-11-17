@@ -39,7 +39,7 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 Gets working set size (memory) in bytes. Includes both private and shared working sets.
 Note that this is different from the value in the task manager, because that excludes the shared working set.
 */
-size_t memInfoCpp(const size_t &pid) {
+size_t memInfoCpp(const size_t& pid) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
     if (process == NULL) {
         std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting memory data." << std::endl; 

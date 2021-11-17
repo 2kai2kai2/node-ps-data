@@ -50,7 +50,7 @@ Memory size in bytes
 Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to physical (RAM) or 'virtual' memory on disk.
 Retrieved from /proc/[pid]/statm
  */
-size_t memInfoCpp(const size_t &pid) {
+size_t memInfoCpp(const size_t& pid) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/statm");
     // Check that this pid is valid
     if (!file.good()) {

@@ -5,13 +5,18 @@
     "name": "kaih2o",
     "url": "https://github.com/2kai2kai2"
   },
-  "version": "1.0.12",
+  "version": "1.1.0",
   "keywords": [
     "process",
     "processes",
     "ps",
     "pid",
-    "lookup"
+    "lookup",
+    "usage",
+    "resource",
+    "performance",
+    "memory",
+    "cpu"
   ],
   "repository": {
     "url": "https://github.com/2kai2kai2/node-ps-data"
