@@ -32,7 +32,7 @@
         "OS=='mac'", {
             "targets": [{
                     "target_name": "node_ps_data",
-                    "sources": ["mac.cc"],
+                    "sources": ["napi.cc", "lib_mac.cc"],
                     "include_dirs": ["./node_modules/node-addon-api"],
                     "cflags!": [ "-fno-exceptions" ],
                     "cflags_cc!": [ "-fno-exceptions" ],
@@ -40,9 +40,6 @@
                         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
                         "CLANG_CXX_LIBRARY": "libc++",
                         "MACOSX_DEPLOYMENT_TARGET": "10.7"
-                    },
-                    "msvs_settings": {
-                        "VCCLCompilerTool": { "ExceptionHandling": 1 }
                     }
             }]
         }]

@@ -38,7 +38,6 @@ npm install node-ps-data
 
 ## Known Issues and Future Plans
 
-- MacOS implementation.
 - Build more binaries for other platforms and architectures.
 - More library functions:
 	- CPU/Memory subcategories (e.g. child process time, pages info, etc.)

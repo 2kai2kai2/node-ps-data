@@ -3,4 +3,6 @@ node-addon-api/
 build/
 test/test_linux
 test/test_win.exe
+test/test_mac
+test/test_mem
 prebuilds/
