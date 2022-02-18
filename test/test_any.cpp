@@ -15,4 +15,11 @@ int main() {
     memInfoCpp(pid, total, rss);
     std::cout << "Total: " << total << std::endl;
     std::cout << "Working Set: " << rss << std::endl;
+
+    std::cout << " == FILE IO == " << std::endl;
+    size_t readSize, readCount, writeSize, writeCount, otherSize, otherCount;
+    fileInfoCpp(pid, readSize, readCount, writeSize, writeCount, otherSize, otherCount);
+    std::cout << "Read: " << readSize << "bytes in " << readCount << " operations" << std::endl;
+    std::cout << "Write: " << writeSize << "bytes in " << writeCount << " operations" << std::endl;
+    std::cout << "Other: " << otherSize << "bytes in " << otherCount << " operations" << std::endl;
 }

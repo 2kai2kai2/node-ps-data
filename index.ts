@@ -31,3 +31,19 @@ export function cpuTime(pid: number): number {
 export function memInfo(pid: number): number {
     return addon.memInfo(pid);
 }
+
+/**
+ * @param pid Process ID to search for.
+ * @returns Number of bytes process has read from file.
+ */
+export function fileRead(pid: number): number {
+    return addon.fileRead(pid);
+}
+
+/**
+ * @param pid Process ID to search for.
+ * @returns Number of bytes process has written to file.
+ */
+export function fileWrite(pid: number): number {
+    return addon.fileWrite(pid);
+}

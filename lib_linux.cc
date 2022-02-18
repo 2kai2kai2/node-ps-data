@@ -47,7 +47,6 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     return true;
 }
 
-// /proc/[pid]/io : file io stats
 // /proc/[pid]/stat : all the stats for ps, manual says defined in kernel source file fs/proc/array.c
 
 /**
@@ -78,4 +77,23 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     total = size * sysconf(_SC_PAGE_SIZE);
     workingSet = RSS * sysconf(_SC_PAGE_SIZE);
     return true;
+}
+
+/**
+Gets file IO information
+Retrieved from /proc/[pid]/io filesystem
+ */
+bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
+                 size_t& writeSize, size_t& writeCount, size_t& otherSize, size_t& otherCount) {
+    FILE* file = fopen(("/proc/" + std::to_string(pid) + "/io").data(), "r");
+    if (file == NULL)
+        return false;
+    fscanf(file, "rchar: %*u\n");
+    fscanf(file, "wchar: %*u\n");
+    fscanf(file, "syscr: %lu\n", &readCount);
+    fscanf(file, "syscw: %lu\n", &writeCount);
+    fscanf(file, "read_bytes: %lu\n", &readSize);
+    fscanf(file, "write_bytes: %lu\n", &writeSize);
+    otherSize = otherCount = 0;
+    return !fclose(file);
 }

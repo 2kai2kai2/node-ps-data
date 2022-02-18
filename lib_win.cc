@@ -57,3 +57,30 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     total = mem.WorkingSetSize + mem.PagefileUsage;
     return true;
 }
+
+/**
+Gets file IO information
+ */
+bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
+                 size_t& writeSize, size_t& writeCount, size_t& otherSize, size_t& otherCount) {
+    HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+    if (process == NULL) {
+        std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting file IO data." << std::endl;
+        return false;
+    }
+    IO_COUNTERS io;
+    if (!GetProcessIoCounters(process, &io)) {
+        std::cerr << GetLastError() << std::endl;
+        CloseHandle(process);
+        return false;
+    }
+    CloseHandle(process);
+
+    readSize = io.ReadTransferCount;
+    readCount = io.ReadOperationCount;
+    writeSize = io.WriteTransferCount;
+    writeCount = io.WriteOperationCount;
+    otherSize = io.OtherTransferCount;
+    otherCount = io.OtherOperationCount;
+    return true;
+}
