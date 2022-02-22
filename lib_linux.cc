@@ -84,7 +84,7 @@ Gets file IO information
 Retrieved from /proc/[pid]/io filesystem
  */
 bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
-                 size_t& writeSize, size_t& writeCount, size_t& otherSize, size_t& otherCount) {
+                 size_t& writeSize, size_t& writeCount) {
     FILE* file = fopen(("/proc/" + std::to_string(pid) + "/io").data(), "r");
     if (file == NULL)
         return false;
@@ -94,6 +94,5 @@ bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
     fscanf(file, "syscw: %lu\n", &writeCount);
     fscanf(file, "read_bytes: %lu\n", &readSize);
     fscanf(file, "write_bytes: %lu\n", &writeSize);
-    otherSize = otherCount = 0;
     return !fclose(file);
 }

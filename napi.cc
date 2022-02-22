@@ -64,9 +64,9 @@ Napi::Number fileReadBytes(const Napi::CallbackInfo& info) {
         throw Error::New(info.Env(), "Invalid number of arguments.");
     const size_t processid = info[0].ToNumber().Int64Value();
     // Run platform-specific implementations; return 0 if not found.
-    size_t readSize, readCount, writeSize, writeCount, otherSize, otherCount;
-    if (!fileInfoCpp(processid, readSize, readCount, writeSize, writeCount, otherSize, otherCount))
-        return Number::New(info.Env(), 0)
+    size_t readSize, readCount, writeSize, writeCount;
+    if (!fileInfoCpp(processid, readSize, readCount, writeSize, writeCount))
+        return Number::New(info.Env(), 0);
     // Return if found
     return Number::New(info.Env(), readSize);
 }
@@ -78,9 +78,9 @@ Napi::Number fileWriteBytes(const Napi::CallbackInfo& info) {
         throw Error::New(info.Env(), "Invalid number of arguments.");
     const size_t processid = info[0].ToNumber().Int64Value();
     // Run platform-specific implementations; return 0 if not found.
-    size_t readSize, readCount, writeSize, writeCount, otherSize, otherCount;
-    if (!fileInfoCpp(processid, readSize, readCount, writeSize, writeCount, otherSize, otherCount))
-        return Number::New(info.Env(), 0)
+    size_t readSize, readCount, writeSize, writeCount;
+    if (!fileInfoCpp(processid, readSize, readCount, writeSize, writeCount))
+        return Number::New(info.Env(), 0);
     // Return if found
     return Number::New(info.Env(), writeSize);
 }

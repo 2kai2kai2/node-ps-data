@@ -62,7 +62,7 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
 Gets file IO information
  */
 bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
-                 size_t& writeSize, size_t& writeCount, size_t& otherSize, size_t& otherCount) {
+                 size_t& writeSize, size_t& writeCount) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
     if (process == NULL) {
         std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting file IO data." << std::endl;
@@ -80,7 +80,7 @@ bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
     readCount = io.ReadOperationCount;
     writeSize = io.WriteTransferCount;
     writeCount = io.WriteOperationCount;
-    otherSize = io.OtherTransferCount;
-    otherCount = io.OtherOperationCount;
+    // otherSize = io.OtherTransferCount;
+    // otherCount = io.OtherOperationCount;
     return true;
 }

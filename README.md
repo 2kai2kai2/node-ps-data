@@ -17,16 +17,18 @@
 ## Get data about process resources without executing terminal commands
 
 - That's right. Unlike existing tools, this module directly retrieves data about processes without needing to open a new shell and wait for a terminal command's response.
-- Supports both Windows and Linux
+- Supports Windows, Linux, and MacOS
 - NodeJS module written in C++
-- Prebuilt binaries for `linux-x64` and `win32-x64`
+- Prebuilt binaries for `linux-x64`, `win32-x64`, and `darwin-x64` (Darwin is the MacOS kernel)
 
 ## Features
 
 - `cpuUserTime(pid)`: Get user-mode CPU usage for a process in milliseconds.
 - `cpuKernelTime(pid)`: Get kernel/system-mode CPU usage for a process in milliseconds.
-- `cpuTime(pid)`: Get total CPU usage for a process in milliseconds.
+- `cpuTime(pid)`: Get total CPU usage for a process in milliseconds (equivalent to `cpuUserTime(pid) + cpuKernelTime(pid)`).
 - `memInfo(pid)`: Get current memory usage for a process in bytes.
+- `fileRead(pid)`: Get total file read size for a process in bytes.
+- `fileWrite(pid)`: Get total file write size for a process in bytes.
 
 ## Installation
 
@@ -41,6 +43,5 @@ npm install node-ps-data
 - Build more binaries for other platforms and architectures.
 - More library functions:
 	- CPU/Memory subcategories (e.g. child process time, pages info, etc.)
-	- Disk usage
 	- Network usage
 	- More!

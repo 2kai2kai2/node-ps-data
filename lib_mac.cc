@@ -41,3 +41,22 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     }
     return true;
 }
+
+/**
+Gets file IO information
+NOTE: MacOS version currently returns number of read/write operations as 0.
+ */
+bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
+                 size_t& writeSize, size_t& writeCount) {
+    rusage_info_current info;
+    if (proc_pid_rusage(pid, RUSAGE_INFO_CURRENT, (rusage_info_t*)&info)) {
+        std::cerr << "Failed to get data about process " << pid
+                  << " while trying to access file IO data." << std::endl;
+        return false;
+    }
+    // Success!
+    readSize = info.ri_diskio_bytesread;
+    writeSize = info.ri_diskio_byteswritten;
+    readCount = writeCount = 0;
+    return true;
+}

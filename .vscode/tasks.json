@@ -16,7 +16,7 @@
             "command": "g++",
             "args": [
                 "-I", "${workspaceFolder}/node_modules/node-addon-api",
-                "-g", "test/test_win.cpp",
+                "-g", "lib_win.cc", "test/test_any.cpp",
                 "-o", "test/test_win",
                 "-l", "psapi",
                 "-Wall", "-Wextra"
@@ -30,14 +30,24 @@
             "command": "g++",
             "args": [
                 "-I", "${workspaceFolder}/node_modules/node-addon-api",
-                "-g", "test/test_linux.cpp",
+                "-g", "lib_linux.cc", "test/test_any.cpp",
                 "-o", "test/test_linux",
                 "-Wall", "-Wextra"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Build Raw C++ test_mac",
+            "type": "shell",
+            "command": "clang++",
+            "args": [
+                "-I", "${workspaceFolder}/node_modules/node-addon-api",
+                "-g", "lib_mac.cc", "test/test_any.cpp",
+                "-o", "test/test_mac",
+                "-Wall", "-Wextra"
+            ],
+            "group": "build",
             "problemMatcher": ["$gcc"]
         }
     ]

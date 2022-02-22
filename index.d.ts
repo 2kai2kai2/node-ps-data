@@ -18,3 +18,13 @@ export declare function cpuTime(pid: number): number;
  * @returns Memory usage in kb. Windows includes shared working set while linux is more strict.
  */
 export declare function memInfo(pid: number): number;
+/**
+ * @param pid Process ID to search for.
+ * @returns Number of bytes process has read from file.
+ */
+export declare function fileRead(pid: number): number;
+/**
+ * @param pid Process ID to search for.
+ * @returns Number of bytes process has written to file.
+ */
+export declare function fileWrite(pid: number): number;

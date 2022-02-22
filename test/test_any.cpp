@@ -2,7 +2,9 @@
 #include <iostream>
 
 int main() {
-    size_t pid = 94058;
+    size_t pid;
+    std::cout << "Enter PID: ";
+    std::cin >> pid;
 
     std::cout << " == CPU == " << std::endl;
     size_t user, kernel;
@@ -17,9 +19,8 @@ int main() {
     std::cout << "Working Set: " << rss << std::endl;
 
     std::cout << " == FILE IO == " << std::endl;
-    size_t readSize, readCount, writeSize, writeCount, otherSize, otherCount;
-    fileInfoCpp(pid, readSize, readCount, writeSize, writeCount, otherSize, otherCount);
-    std::cout << "Read: " << readSize << "bytes in " << readCount << " operations" << std::endl;
-    std::cout << "Write: " << writeSize << "bytes in " << writeCount << " operations" << std::endl;
-    std::cout << "Other: " << otherSize << "bytes in " << otherCount << " operations" << std::endl;
+    size_t readSize, readCount, writeSize, writeCount;
+    fileInfoCpp(pid, readSize, readCount, writeSize, writeCount);
+    std::cout << "Read: " << readSize << " bytes in " << readCount << " operations" << std::endl;
+    std::cout << "Write: " << writeSize << " bytes in " << writeCount << " operations" << std::endl;
 }
