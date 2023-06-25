@@ -40,7 +40,8 @@
   "scripts": {
     "build-ts": "tsc",
     "prebuild": "prebuildify --napi --strip -m",
-    "install": "node-gyp-build"
+    "install": "node-gyp-build",
+    "install-dependencies": "npm install --ignore-scripts"
   },
   "type": "commonjs",
   "types": "index.d.ts"

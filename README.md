@@ -4,7 +4,7 @@
 ![GitHub version](https://img.shields.io/github/package-json/v/2kai2kai2/node-ps-data?logo=Github)
 ](https://github.com/2kai2kai2/node-ps-data/releases/latest)
 [
-![Build Release](https://img.shields.io/github/workflow/status/2kai2kai2/node-ps-data/Node.js%20Package?logo=GitHub)
+![Build Release](https://img.shields.io/github/actions/workflow/status/2kai2kai2/node-ps-data/npm-publish.yml?logo=GitHub)
 ](https://github.com/2kai2kai2/node-ps-data/actions/workflows/npm-publish.yml)
 [
 ![NPM version](https://img.shields.io/npm/v/node-ps-data?logo=npm)
