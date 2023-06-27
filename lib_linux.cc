@@ -1,3 +1,21 @@
+/**
+ * @file lib_linux.cc
+ * @author @2kai2kai2
+ * 
+ * @copyright Copyright (c) 2023 Kai Orita
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 #include "lib.h"
 #include <fstream>
 #include <iostream>
@@ -6,7 +24,7 @@
 #include <unistd.h>
 
 /**
-Gets the CPU time used by a process in milliseconds.
+ * Gets the CPU time used by a process in milliseconds.
  */
 bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/stat");
@@ -50,10 +68,10 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 // /proc/[pid]/stat : all the stats for ps, manual says defined in kernel source file fs/proc/array.c
 
 /**
-Memory size in bytes
-
-Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to physical (RAM) or 'virtual' memory on disk.
-Retrieved from /proc/[pid]/statm
+ * Memory size in bytes
+ * 
+ * Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to
+ * physical (RAM) or 'virtual' memory on disk. Retrieved from /proc/[pid]/statm
  */
 bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/statm");
@@ -80,8 +98,8 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
 }
 
 /**
-Gets file IO information
-Retrieved from /proc/[pid]/io filesystem
+ * Gets file IO information
+ * Retrieved from /proc/[pid]/io filesystem
  */
 bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
                  size_t& writeSize, size_t& writeCount) {
