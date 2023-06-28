@@ -1,7 +1,7 @@
 /**
  * @file test.ts
  * @author @2kai2kai2
- * 
+ *
  * @copyright Copyright (c) 2023 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,6 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import * as m from "../index";
-console.log("hi");
-console.log(m.cpuTime(968));
+
+const ps = require('node-ps-data');
+console.log(ps.cpuTime(968));

@@ -3,61 +3,112 @@ name: Node.js Package
 on:
   release:
     types: [created]
+  workflow_dispatch:
+  pull_request:
+  push:   
 
 jobs:
-  build-linux-x64:
+  build:
+    strategy:
+      matrix:
+        include:
+          - image: ubuntu-latest
+            kernel: linux-x64
+          - image: windows-latest
+            kernel: win32-x64
+          - image: macos-latest
+            kernel: darwin-x64
+    name: Build ${{ matrix.kernel }}
+    runs-on: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm run install-dependencies
+      - run: npm run prebuild
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.kernel }}
+          path: prebuilds/${{ matrix.kernel }}/
+          if-no-files-found: error
+          retention-days: 1
+  pack-module:
+    name: Pack module
     runs-on: ubuntu-latest
+    needs: [build]
+    outputs:
+      tgz_name: ${{ steps.pack.outputs.tgz_name }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: npm install --ignore-scripts
-      - run: npm run prebuild
-      - uses: actions/upload-artifact@v2
-        with:
-          name: linux-x64
-          path: prebuilds/linux-x64/
-  build-win32-x64:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: npm install --ignore-scripts
-      - run: npm run prebuild
-      - uses: actions/upload-artifact@v2
-        with:
-          name: win32-x64
-          path: prebuilds/win32-x64/
-  build-darwin-x64:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: npm install --ignore-scripts
-      - run: npm run prebuild
-      - uses: actions/upload-artifact@v2
-        with:
-          name: darwin-x64
-          path: prebuilds/darwin-x64/
-  publish-npm:
-    runs-on: ubuntu-latest
-    needs: [build-linux-x64, build-win32-x64, build-darwin-x64]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          registry-url: https://registry.npmjs.org/
       - uses: actions/download-artifact@v2
+        name: Bundle Prebuilds
         with:
           path: prebuilds/
-      - run: npm install
+      - run: npm run install-dependencies
       - run: npm run build-ts
-      - run: npm publish
+      - run: echo "tgz_name=$(npm pack)" >> "$GITHUB_OUTPUT"
+        id: pack
+      - uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: node-ps-data-*.tgz
+  test:
+    strategy:
+      matrix:
+        include:
+          - image: ubuntu-latest
+            kernel: linux-x64
+          - image: windows-latest
+            kernel: win32-x64
+          - image: macos-latest
+            kernel: darwin-x64
+    name: Test ${{ matrix.kernel }}
+    runs-on: ${{ matrix.image }}
+    needs: [pack-module]
+    steps:
+      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+        name: Fetch tests
+        with:
+          sparse-checkout: |
+            test/
+          sparse-checkout-cone-mode: false
+      - name: Install Typescript
+        run: npm i -D @types/node typescript
+      - uses: actions/download-artifact@v2
+        name: Load bundled module
+        id: download-module
+        with:
+          name: package
+      - run: npm i ${{ needs.pack-module.outputs.tgz_name }}
+      
+      - name: Basic CPU Test | Build Test
+        run: npm exec tsc ./test/test_cpu_basic.ts
+      - name: Basic CPU Test | Run Test
+        run: node ./test/test_cpu_basic.js
+      - name: Basic Memory Test | Build Test
+        run: npm exec tsc ./test/test_mem_basic.ts
+      - name: Basic Memory Test | Run Test
+        run: node ./test/test_mem_basic.js
+      #- name: File Read / Write | Build Test
+      #  run: npm exec tsc ./test/test_readwrite.ts
+      #- name: File Read / Write | Run Test
+      #  run: node ./test/test_readwrite.js
+  publish-npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: [test, pack-module]
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          registry-url: https://registry.npmjs.org/
+      - uses: actions/download-artifact@v2
+        name: Bundle Prebuilds
+        with:
+          name: package
+      - run: npm publish ${{ needs.pack-module.outputs.tgz_name }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
