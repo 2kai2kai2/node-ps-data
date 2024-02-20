@@ -18,6 +18,8 @@ jobs:
             kernel: win32-x64
           - image: macos-latest
             kernel: darwin-x64
+          - image: macos-14
+            kernel: darwin-arm64
     name: Build ${{ matrix.kernel }}
     runs-on: ${{ matrix.image }}
     steps:
@@ -64,6 +66,8 @@ jobs:
             kernel: win32-x64
           - image: macos-latest
             kernel: darwin-x64
+          - image: macos-14
+            kernel: darwin-arm64
     name: Test ${{ matrix.kernel }}
     runs-on: ${{ matrix.image }}
     needs: [pack-module]

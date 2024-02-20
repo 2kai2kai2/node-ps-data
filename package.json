@@ -24,8 +24,8 @@
     "url": "https://github.com/2kai2kai2/node-ps-data"
   },
   "dependencies": {
-    "node-gyp": "^8.4.0",
-    "node-gyp-build": "^4.3.0"
+    "node-gyp": "^10.0.1",
+    "node-gyp-build": "^4.8.0"
   },
   "devDependencies": {
     "@types/node": "^16.9.6",
