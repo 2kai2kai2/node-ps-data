@@ -19,7 +19,7 @@
 - That's right. Unlike existing tools, this module directly retrieves data about processes without needing to open a new shell and wait for a terminal command's response.
 - Supports Windows, Linux, and MacOS
 - NodeJS module written in C++
-- Prebuilt binaries for `linux-x64`, `win32-x64`, and `darwin-x64` (Darwin is the MacOS kernel)
+- Prebuilt binaries for `linux-x64`, `win32-x64`, `darwin-x64`, and `darwin-arm64` (Darwin is the MacOS kernel)
 
 ## Features
 
