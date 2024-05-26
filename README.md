@@ -1,9 +1,6 @@
 # node-ps-data
 
 [
-![GitHub version](https://img.shields.io/github/package-json/v/2kai2kai2/node-ps-data?logo=Github)
-](https://github.com/2kai2kai2/node-ps-data/releases/latest)
-[
 ![Build Release](https://img.shields.io/github/actions/workflow/status/2kai2kai2/node-ps-data/npm-publish.yml?logo=GitHub)
 ](https://github.com/2kai2kai2/node-ps-data/actions/workflows/npm-publish.yml)
 [
@@ -27,6 +24,7 @@
 - `cpuKernelTime(pid)`: Get kernel/system-mode CPU usage for a process in milliseconds.
 - `cpuTime(pid)`: Get total CPU usage for a process in milliseconds (equivalent to `cpuUserTime(pid) + cpuKernelTime(pid)`).
 - `memInfo(pid)`: Get current memory usage for a process in bytes.
+- `memRSS(pid)`: Get current memory resident/working set size for a process in bytes.
 - `fileRead(pid)`: Get total file read size for a process in bytes.
 - `fileWrite(pid)`: Get total file write size for a process in bytes.
 
@@ -44,9 +42,11 @@ npm install node-ps-data
 - More library functions:
 	- CPU/Memory subcategories (e.g. child process time, pages info, etc.)
 	- Network usage
+	- GPU memory and usage
 	- More!
 
 ## License & Copyright
+
 Copyright (c) 2023 Kai Orita
 
 This program is free software: you can redistribute it and/or modify
