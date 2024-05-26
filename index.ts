@@ -1,7 +1,7 @@
 /**
  * @file index.ts
  * @author @2kai2kai2
- * 
+ *
  * @copyright Copyright (c) 2023 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,10 +44,23 @@ export function cpuTime(pid: number): number {
 
 /**
  * @param pid Process ID to search for.
- * @returns Memory usage in kb. Windows includes shared working set while linux is more strict.
+ * @returns Total usage in bytes. Windows includes shared working set while linux is more strict.
+ *
+ * Note that as this includes virtual memory, it will often be extremely high on MacOS.
  */
 export function memInfo(pid: number): number {
     return addon.memInfo(pid);
+}
+
+/**
+ * @param pid Process ID to search for.
+ * @returns Resident/working set size in bytes. Windows includes shared working set while linux is more strict.
+ *
+ * Depending on operating system, this may be approximate. It represents the total amount of physical memory being used,
+ * which does not include any vitual memory.
+ */
+export function memRSS(pid: number): number {
+    return addon.memRSS(pid);
 }
 
 /**

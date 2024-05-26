@@ -1,7 +1,7 @@
 /**
  * @file napi.cc
  * @author @2kai2kai2
- * 
+ *
  * @copyright Copyright (c) 2023 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,6 +76,20 @@ Napi::Number memInfo(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), total);
 }
 
+Napi::Number memRSS(const Napi::CallbackInfo& info) {
+    using namespace Napi;
+    // Check that the correct number arguments were passed
+    if (info.Length() != 1)
+        throw Error::New(info.Env(), "Invalid number of arguments.");
+    const size_t processid = info[0].ToNumber().Int64Value();
+    // Run through platform-specific implementations; return 0 if not found.
+    size_t total, rss;
+    if (!memInfoCpp(processid, total, rss))
+        return Number::New(info.Env(), 0);
+    // Return if found
+    return Number::New(info.Env(), rss);
+}
+
 Napi::Number fileReadBytes(const Napi::CallbackInfo& info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
@@ -110,6 +124,7 @@ Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
     exports.Set(String::New(env, "cpuKernelTime"), Function::New(env, cpuKernelTime));
     exports.Set(String::New(env, "cpuTime"), Function::New(env, cpuTime));
     exports.Set(String::New(env, "memInfo"), Function::New(env, memInfo));
+    exports.Set(String::New(env, "memRSS"), Function::New(env, memRSS));
     exports.Set(String::New(env, "fileRead"), Function::New(env, fileReadBytes));
     exports.Set(String::New(env, "fileWrite"), Function::New(env, fileWriteBytes));
     return exports;

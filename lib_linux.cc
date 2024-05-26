@@ -1,7 +1,7 @@
 /**
  * @file lib_linux.cc
  * @author @2kai2kai2
- * 
+ *
  * @copyright Copyright (c) 2023 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 
 /**
  * Memory size in bytes
- * 
+ *
  * Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to
  * physical (RAM) or 'virtual' memory on disk. Retrieved from /proc/[pid]/statm
  */
@@ -85,10 +85,12 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
     // 2 - RSS (working set; approx.)
     size_t RSS;
     file >> RSS;
+#ifdef FALSE
     // 3-6 - size of various other parts (code, shared pages, )
     for (unsigned char i = 3; i <= 6; ++i) {
         file.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
     }
+#endif
 
     file.close();
 
@@ -101,8 +103,7 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
  * Gets file IO information
  * Retrieved from /proc/[pid]/io filesystem
  */
-bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
-                 size_t& writeSize, size_t& writeCount) {
+bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount, size_t& writeSize, size_t& writeCount) {
     FILE* file = fopen(("/proc/" + std::to_string(pid) + "/io").data(), "r");
     if (file == NULL)
         return false;
