@@ -20,12 +20,11 @@
             "program": "${workspaceFolder}/test/test_linux",
             "cwd": "${workspaceFolder}/test",
             "preLaunchTask": "Build Raw C++ test_linux",
-            "MIMode": "gdb",
-            "console": "integratedTerminal"
+            "MIMode": "gdb"
         },
         {
             "name": "(Node) Launch",
-            "type": "pwa-node",
+            "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/test/test.ts",
             "cwd": "${workspaceFolder}/test",
