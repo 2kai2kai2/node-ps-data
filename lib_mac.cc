@@ -1,8 +1,8 @@
 /**
  * @file lib_mac.cc
  * @author @2kai2kai2
- * 
- * @copyright Copyright (c) 2023 Kai Orita
+ *
+ * @copyright Copyright (c) 2025 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -23,10 +23,15 @@
 /**
  * Gets the CPU time used by a process in milliseconds.
  */
-bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
+bool cpuTimeCpp(const size_t &pid, size_t &user, size_t &kernel) {
     proc_taskinfo info;
-    int ret = proc_pidinfo(pid, PROC_PIDTASKINFO, 0, (void*)&info,
-                           PROC_PIDTASKINFO_SIZE);
+    int ret = proc_pidinfo(
+        pid,
+        PROC_PIDTASKINFO,
+        0,
+        (void *)&info,
+        PROC_PIDTASKINFO_SIZE
+    );
     if (ret > 0) {
         // Success!
         user = info.pti_total_user / 1000000;
@@ -43,10 +48,15 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 /**
  * Gets memory info in bytes.
  */
-bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
+bool memInfoCpp(const size_t &pid, size_t &total, size_t &workingSet) {
     proc_taskinfo info;
-    int ret = proc_pidinfo(pid, PROC_PIDTASKINFO, 0, (void*)&info,
-                           PROC_PIDTASKINFO_SIZE);
+    int ret = proc_pidinfo(
+        pid,
+        PROC_PIDTASKINFO,
+        0,
+        (void *)&info,
+        PROC_PIDTASKINFO_SIZE
+    );
     if (ret > 0) {
         // Success!
         total = info.pti_resident_size + info.pti_virtual_size;
@@ -64,10 +74,15 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
  * Gets file IO information
  * NOTE: MacOS version currently returns number of read/write operations as 0.
  */
-bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
-                 size_t& writeSize, size_t& writeCount) {
+bool fileInfoCpp(
+    const size_t &pid,
+    size_t &readSize,
+    size_t &readCount,
+    size_t &writeSize,
+    size_t &writeCount
+) {
     rusage_info_current info;
-    if (proc_pid_rusage(pid, RUSAGE_INFO_CURRENT, (rusage_info_t*)&info)) {
+    if (proc_pid_rusage(pid, RUSAGE_INFO_CURRENT, (rusage_info_t *)&info)) {
         std::cerr << "Failed to get data about process " << pid
                   << " while trying to access file IO data." << std::endl;
         return false;

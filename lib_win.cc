@@ -1,8 +1,8 @@
 /**
  * @file lib_win.cc
  * @author @2kai2kai2
- * 
- * @copyright Copyright (c) 2023 Kai Orita
+ *
+ * @copyright Copyright (c) 2025 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -25,16 +25,25 @@
 /**
  * Gets the CPU time used by a process in milliseconds.
  */
-bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
+bool cpuTimeCpp(const size_t &pid, size_t &user, size_t &kernel) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, true, pid);
     if (process == NULL) {
-        std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting cpu data." << std::endl;
+        std::cerr
+            << "Failed to open process " << pid
+            << " with PROCESS_QUERY_LIMITED_INFORMATION when getting cpu data."
+            << std::endl;
         return false;
     }
 
     // Get data
     _FILETIME creationtime, exittime, kerneltime, usertime;
-    if (!GetProcessTimes(process, &creationtime, &exittime, &kerneltime, &usertime)) {
+    if (!GetProcessTimes(
+            process,
+            &creationtime,
+            &exittime,
+            &kerneltime,
+            &usertime
+        )) {
         std::cerr << GetLastError() << std::endl;
         CloseHandle(process);
         return false;
@@ -54,13 +63,17 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
 }
 
 /**
- * Gets working set size (memory) in bytes. Includes both private and shared working sets.
- * Note that this is different from the value in the task manager, because that excludes the shared working set.
+ * Gets working set size (memory) in bytes. Includes both private and shared
+ * working sets. Note that this is different from the value in the task manager,
+ * because that excludes the shared working set.
  */
-bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
+bool memInfoCpp(const size_t &pid, size_t &total, size_t &workingSet) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
     if (process == NULL) {
-        std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting memory data." << std::endl;
+        std::cerr << "Failed to open process " << pid
+                  << " with PROCESS_QUERY_LIMITED_INFORMATION when getting "
+                     "memory data."
+                  << std::endl;
         return false;
     }
 
@@ -80,11 +93,19 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
 /**
  * Gets file IO information
  */
-bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
-                 size_t& writeSize, size_t& writeCount) {
+bool fileInfoCpp(
+    const size_t &pid,
+    size_t &readSize,
+    size_t &readCount,
+    size_t &writeSize,
+    size_t &writeCount
+) {
     HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
     if (process == NULL) {
-        std::cerr << "Failed to open process " << pid << " with PROCESS_QUERY_LIMITED_INFORMATION when getting file IO data." << std::endl;
+        std::cerr << "Failed to open process " << pid
+                  << " with PROCESS_QUERY_LIMITED_INFORMATION when getting "
+                     "file IO data."
+                  << std::endl;
         return false;
     }
     IO_COUNTERS io;

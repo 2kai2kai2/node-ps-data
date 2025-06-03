@@ -2,7 +2,7 @@
  * @file lib_linux.cc
  * @author @2kai2kai2
  *
- * @copyright Copyright (c) 2023 Kai Orita
+ * @copyright Copyright (c) 2025 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +26,7 @@
 /**
  * Gets the CPU time used by a process in milliseconds.
  */
-bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
+bool cpuTimeCpp(const size_t &pid, size_t &user, size_t &kernel) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/stat");
     // Check that this pid is valid
     if (!file.good()) {
@@ -50,7 +50,8 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     file >> kerneltime;
     kerneltime = kerneltime * 1000 / sysconf(_SC_CLK_TCK);
 #ifdef FALSE
-    // 16 - awaited child user time (not sure if this is needed, but might as well grab it just in case)
+    // 16 - awaited child user time (not sure if this is needed, but might as
+    // well grab it just in case)
     size_t childusertime;
     file >> childusertime;
     childusertime = childusertime * 1000 / sysconf(_SC_CLK_TCK);
@@ -65,15 +66,17 @@ bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel) {
     return true;
 }
 
-// /proc/[pid]/stat : all the stats for ps, manual says defined in kernel source file fs/proc/array.c
+// /proc/[pid]/stat : all the stats for ps, manual says defined in kernel source
+// file fs/proc/array.c
 
 /**
  * Memory size in bytes
  *
- * Linux uses a system where all memory is considered virtual memory stored with pages, and those addresses convert to
- * physical (RAM) or 'virtual' memory on disk. Retrieved from /proc/[pid]/statm
+ * Linux uses a system where all memory is considered virtual memory stored with
+ * pages, and those addresses convert to physical (RAM) or 'virtual' memory on
+ * disk. Retrieved from /proc/[pid]/statm
  */
-bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
+bool memInfoCpp(const size_t &pid, size_t &total, size_t &workingSet) {
     std::ifstream file("/proc/" + std::to_string(pid) + "/statm");
     // Check that this pid is valid
     if (!file.good()) {
@@ -103,8 +106,14 @@ bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet) {
  * Gets file IO information
  * Retrieved from /proc/[pid]/io filesystem
  */
-bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount, size_t& writeSize, size_t& writeCount) {
-    FILE* file = fopen(("/proc/" + std::to_string(pid) + "/io").data(), "r");
+bool fileInfoCpp(
+    const size_t &pid,
+    size_t &readSize,
+    size_t &readCount,
+    size_t &writeSize,
+    size_t &writeCount
+) {
+    FILE *file = fopen(("/proc/" + std::to_string(pid) + "/io").data(), "r");
     if (file == NULL)
         return false;
     fscanf(file, "rchar: %*u\n");

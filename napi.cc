@@ -2,7 +2,7 @@
  * @file napi.cc
  * @author @2kai2kai2
  *
- * @copyright Copyright (c) 2023 Kai Orita
+ * @copyright Copyright (c) 2025 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
 #include "lib.h"
 #include <napi.h>
 
-Napi::Number cpuUserTime(const Napi::CallbackInfo& info) {
+Napi::Number cpuUserTime(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -34,7 +34,7 @@ Napi::Number cpuUserTime(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), user);
 }
 
-Napi::Number cpuKernelTime(const Napi::CallbackInfo& info) {
+Napi::Number cpuKernelTime(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -48,7 +48,7 @@ Napi::Number cpuKernelTime(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), kernel);
 }
 
-Napi::Number cpuTime(const Napi::CallbackInfo& info) {
+Napi::Number cpuTime(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -62,7 +62,7 @@ Napi::Number cpuTime(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), user + kernel);
 }
 
-Napi::Number memInfo(const Napi::CallbackInfo& info) {
+Napi::Number memInfo(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -76,7 +76,7 @@ Napi::Number memInfo(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), total);
 }
 
-Napi::Number memRSS(const Napi::CallbackInfo& info) {
+Napi::Number memRSS(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -90,7 +90,7 @@ Napi::Number memRSS(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), rss);
 }
 
-Napi::Number fileReadBytes(const Napi::CallbackInfo& info) {
+Napi::Number fileReadBytes(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -104,7 +104,7 @@ Napi::Number fileReadBytes(const Napi::CallbackInfo& info) {
     return Number::New(info.Env(), readSize);
 }
 
-Napi::Number fileWriteBytes(const Napi::CallbackInfo& info) {
+Napi::Number fileWriteBytes(const Napi::CallbackInfo &info) {
     using namespace Napi;
     // Check that the correct number arguments were passed
     if (info.Length() != 1)
@@ -120,13 +120,25 @@ Napi::Number fileWriteBytes(const Napi::CallbackInfo& info) {
 
 Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
     using namespace Napi;
-    exports.Set(String::New(env, "cpuUserTime"), Function::New(env, cpuUserTime));
-    exports.Set(String::New(env, "cpuKernelTime"), Function::New(env, cpuKernelTime));
+    exports.Set(
+        String::New(env, "cpuUserTime"),
+        Function::New(env, cpuUserTime)
+    );
+    exports.Set(
+        String::New(env, "cpuKernelTime"),
+        Function::New(env, cpuKernelTime)
+    );
     exports.Set(String::New(env, "cpuTime"), Function::New(env, cpuTime));
     exports.Set(String::New(env, "memInfo"), Function::New(env, memInfo));
     exports.Set(String::New(env, "memRSS"), Function::New(env, memRSS));
-    exports.Set(String::New(env, "fileRead"), Function::New(env, fileReadBytes));
-    exports.Set(String::New(env, "fileWrite"), Function::New(env, fileWriteBytes));
+    exports.Set(
+        String::New(env, "fileRead"),
+        Function::New(env, fileReadBytes)
+    );
+    exports.Set(
+        String::New(env, "fileWrite"),
+        Function::New(env, fileWriteBytes)
+    );
     return exports;
 }
 

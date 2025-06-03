@@ -1,8 +1,8 @@
 /**
  * @file lib.h
  * @author @2kai2kai2
- * 
- * @copyright Copyright (c) 2023 Kai Orita
+ *
+ * @copyright Copyright (c) 2025 Kai Orita
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -20,9 +20,14 @@
 #pragma once
 #include <cstddef>
 
-bool cpuTimeCpp(const size_t& pid, size_t& user, size_t& kernel);
+bool cpuTimeCpp(const size_t &pid, size_t &user, size_t &kernel);
 
-bool memInfoCpp(const size_t& pid, size_t& total, size_t& workingSet);
+bool memInfoCpp(const size_t &pid, size_t &total, size_t &workingSet);
 
-bool fileInfoCpp(const size_t& pid, size_t& readSize, size_t& readCount,
-                 size_t& writeSize, size_t& writeCount);
+bool fileInfoCpp(
+    const size_t &pid,
+    size_t &readSize,
+    size_t &readCount,
+    size_t &writeSize,
+    size_t &writeCount
+);
