@@ -29,7 +29,7 @@ jobs:
           node-version: '16'
       - run: npm run install-dependencies
       - run: npm run prebuild
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.kernel }}
           path: prebuilds/${{ matrix.kernel }}/
@@ -44,14 +44,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4
         name: Bundle Prebuilds
         with:
           path: prebuilds/
       - run: npm run install-dependencies
       - run: echo "tgz_name=$(npm pack)" >> "$GITHUB_OUTPUT"
         id: pack
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: package
           path: node-ps-data-*.tgz
@@ -80,7 +80,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Install Typescript
         run: npm i -D @types/node typescript
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4
         name: Load bundled module
         id: download-module
         with:
@@ -108,7 +108,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           registry-url: https://registry.npmjs.org/
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4
         name: Bundle Prebuilds
         with:
           name: package
