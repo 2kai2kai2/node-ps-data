@@ -19,7 +19,9 @@
 
 #pragma once
 #include <napi.h>
-#include <nvml.h>
+
+struct nvmlDevice_st;
+typedef nvmlDevice_st *nvmlDevice_t;
 
 class NvidiaGPU : public Napi::ObjectWrap<NvidiaGPU> {
 public:
@@ -30,7 +32,7 @@ public:
 
     /**
      * Gets the device's name as a `Napi::String`.
-     * 
+     *
      * No params.
      */
     Napi::Value name(const Napi::CallbackInfo &info);

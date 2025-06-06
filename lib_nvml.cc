@@ -17,6 +17,7 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include "lib_nvml.h"
+#include <nvml.h>
 
 // initial
 Napi::FunctionReference *NvidiaGPU::constructor = nullptr;

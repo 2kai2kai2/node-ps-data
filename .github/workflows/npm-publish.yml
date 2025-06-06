@@ -14,12 +14,12 @@ jobs:
         include:
           - image: ubuntu-latest
             kernel: linux-x64
-          - image: windows-latest
-            kernel: win32-x64
-          - image: macos-13
-            kernel: darwin-x64
-          - image: macos-latest
-            kernel: darwin-arm64
+          # - image: windows-latest
+          #   kernel: win32-x64
+          # - image: macos-13
+          #   kernel: darwin-x64
+          # - image: macos-latest
+          #   kernel: darwin-arm64
     name: Build ${{ matrix.kernel }}
     runs-on: ${{ matrix.image }}
     steps:
@@ -27,6 +27,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
+      - run: |
+          sudo apt-get install -y nvidia-driver-535
+          sudo apt-get install -y libnvidia-ml-dev
+        if: matrix.kernel == 'linux-x64'
       - run: npm run install-dependencies
       - run: npm run prebuild
       - uses: actions/upload-artifact@v4
@@ -48,6 +52,7 @@ jobs:
         name: Bundle Prebuilds
         with:
           path: prebuilds/
+      - run: ls -R prebuilds
       - run: npm run install-dependencies
       - run: echo "tgz_name=$(npm pack)" >> "$GITHUB_OUTPUT"
         id: pack
@@ -78,8 +83,6 @@ jobs:
           sparse-checkout: |
             test/
           sparse-checkout-cone-mode: false
-      - name: Install Typescript
-        run: npm i -D @types/node typescript
       - uses: actions/download-artifact@v4
         name: Load bundled module
         id: download-module
