@@ -10,5 +10,3 @@ test/test_mem
 prebuilds/
 *.obj
 node-ps-data-*.tgz
-*.js
-*.d.ts

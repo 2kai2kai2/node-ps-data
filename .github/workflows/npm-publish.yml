@@ -49,7 +49,6 @@ jobs:
         with:
           path: prebuilds/
       - run: npm run install-dependencies
-      - run: npm run build-ts
       - run: echo "tgz_name=$(npm pack)" >> "$GITHUB_OUTPUT"
         id: pack
       - uses: actions/upload-artifact@v2

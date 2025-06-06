@@ -18,6 +18,7 @@
  */
 
 #include "lib.h"
+#include "lib_nvml.h"
 #include <napi.h>
 
 Napi::Number cpuUserTime(const Napi::CallbackInfo &info) {
@@ -139,6 +140,7 @@ Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
         String::New(env, "fileWrite"),
         Function::New(env, fileWriteBytes)
     );
+    NvidiaGPU::Init(env, exports);
     return exports;
 }
 
