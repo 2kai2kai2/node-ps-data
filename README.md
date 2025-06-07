@@ -27,6 +27,7 @@
 - `memRSS(pid)`: Get current memory resident/working set size for a process in bytes.
 - `fileRead(pid)`: Get total file read size for a process in bytes.
 - `fileWrite(pid)`: Get total file write size for a process in bytes.
+- `NvidiaGPU.allGPUs()`: Get handles for all Nvidia GPUs (total, not process-specific data)
 
 ## Installation
 
@@ -42,23 +43,5 @@ npm install node-ps-data
 - More library functions:
 	- CPU/Memory subcategories (e.g. child process time, pages info, etc.)
 	- Network usage
-	- GPU memory and usage
+	- Process-specific GPU memory and usage
 	- More!
-
-## License & Copyright
-
-Copyright (c) 2023 Kai Orita
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
- 

@@ -1,8 +1,8 @@
 /**
- * @file lib_nvml_stub.c
+ * @file lib_nvidia_stub.c
  * @author @2kai2kai2
  *
- * This is a stub for systems without NVML (such as MacOS)
+ * This is a stub for systems without any Nvidia GPUs (such as MacOS)
  *
  * @copyright Copyright (c) 2025 2kai2kai2
  *  This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include "lib_nvml.h"
+#include "lib_nvidia.h"
 
 // initial
 Napi::FunctionReference *NvidiaGPU::constructor = nullptr;
 
-Napi::Array allGPUs(const Napi::CallbackInfo &info) {
-    using namespace Napi;
-    // Check that the correct number arguments were passed
-    if (info.Length() != 0) {
-        throw Error::New(info.Env(), "Invalid number of arguments.");
-    }
+Napi::Value NvidiaGPU::allGPUs(const Napi::CallbackInfo &info) {
     return Napi::Array::New(info.Env());
 }
 

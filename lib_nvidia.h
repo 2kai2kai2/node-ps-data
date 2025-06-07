@@ -1,5 +1,5 @@
 /**
- * @file lib_nvml.h
+ * @file lib_nvidia.h
  * @author @2kai2kai2
  *
  * @copyright Copyright (c) 2025 2kai2kai2
@@ -19,16 +19,17 @@
 
 #pragma once
 #include <napi.h>
+#include <vector>
 
 struct nvmlDevice_st;
 typedef nvmlDevice_st *nvmlDevice_t;
 
 class NvidiaGPU : public Napi::ObjectWrap<NvidiaGPU> {
 public:
+    static Napi::Value allGPUs(const Napi::CallbackInfo &info);
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     NvidiaGPU(const Napi::CallbackInfo &info);
     ~NvidiaGPU();
-    static Napi::Value allGPUs(const Napi::CallbackInfo &info);
 
     /**
      * Gets the device's name as a `Napi::String`.
@@ -37,11 +38,15 @@ public:
      */
     Napi::Value name(const Napi::CallbackInfo &info);
     Napi::Value utilization(const Napi::CallbackInfo &info);
+    /**
+     * @returns js object `{free: number, total: number, used: number}`
+     */
+    Napi::Value memory(const Napi::CallbackInfo &info);
 
 private:
     static Napi::FunctionReference *constructor;
+    /** Is `NULL` when not using nvml */
     nvmlDevice_t device;
+    size_t deviceIdx;
     unsigned long long lastSeenTimeStamp;
-    uint32_t pid;
-    // NvidiaGPU(const nvmlDevice_t device);
 };

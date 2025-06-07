@@ -14,12 +14,12 @@ jobs:
         include:
           - image: ubuntu-latest
             kernel: linux-x64
-          # - image: windows-latest
-          #   kernel: win32-x64
-          # - image: macos-13
-          #   kernel: darwin-x64
-          # - image: macos-latest
-          #   kernel: darwin-arm64
+          - image: windows-latest
+            kernel: win32-x64
+          - image: macos-13
+            kernel: darwin-x64
+          - image: macos-latest
+            kernel: darwin-arm64
     name: Build ${{ matrix.kernel }}
     runs-on: ${{ matrix.image }}
     steps:

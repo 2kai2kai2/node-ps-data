@@ -73,15 +73,28 @@ declare function fileWrite(pid: number): number;
  */
 declare interface NvidiaGPUUtilization {
     /**
-     * The utilization of the device's Steaming Multiprocessors (SMs)
-     * 
-     * This includes most 3D and compute operations.
+     * The proportion of the time that ANY kernel is being run
      */
-    smUtilization: number
+    gpu: number;
+    /**
+     * The proportion of the *time* that memory is being read/written.
+     * 
+     * This is NOT the amount of memory currently USED.
+     */
+    memoryRW: number;
+}
+
+declare interface NvidiaGPUMemory {
+    /** In bytes */
+    free: number;
+    /** In bytes */
+    total: number;
+    /** In bytes */
+    used: number;
 }
 
 /**
- * A handle for getting process data from a single Nvidia GPU (internally uses [NVML](https://docs.nvidia.com/deploy/nvml-api/nvml-api-reference.html))
+ * A handle for getting TOTAL data from a single Nvidia GPU (internally uses [NVML](https://docs.nvidia.com/deploy/nvml-api/nvml-api-reference.html))
  */
 declare class NvidiaGPU {
     /**
@@ -95,16 +108,25 @@ declare class NvidiaGPU {
 
     /**
      * @param deviceIdx The index of the GPU to get a handle for.
-     * @param pid The process id to search for.
      * 
      * @throws An error if `deviceIdx` is invalid or if we do not have permission to access it.
      * @throws
      */
-    constructor(deviceIdx: number, pid: number);
+    constructor(deviceIdx: number);
 
     /**
-     * Returns the process's compute utilization since the last query
+     * Returns the device name.
+     */
+    name(): string;
+
+    /**
+     * Returns the GPU's total compute utilization since the last query
      * (or if the last query was a long time ago/never, since the start of the stored buffer).
      */
     utilization(): NvidiaGPUUtilization;
+
+    /**
+     * Returns data about the total memory utilization on this GPU.
+     */
+    memory(): NvidiaGPUMemory;
 }

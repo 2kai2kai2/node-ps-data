@@ -18,7 +18,7 @@
  */
 
 #include "lib.h"
-#include "lib_nvml.h"
+#include "lib_nvidia.h"
 #include <napi.h>
 
 Napi::Number cpuUserTime(const Napi::CallbackInfo &info) {

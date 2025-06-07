@@ -3,7 +3,11 @@
         ["OS=='win'", {
             "targets": [{
                     "target_name": "node_ps_data",
-                    "sources": ["napi.cc", "lib_win.cc", "lib_nvml.cc"],
+                    "sources": [
+                        "napi.cc",
+                        "lib_win.cc",
+                        "lib_nvidia_nvml.cc",
+                    ],
                     "include_dirs": [
                         "./node_modules/node-addon-api",
                         "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.9/include"
@@ -27,7 +31,7 @@
         "OS=='linux'", {
             "targets": [{
                     "target_name": "node_ps_data",
-                    "sources": ["napi.cc", "lib_linux.cc", "lib_nvml.cc"],
+                    "sources": ["napi.cc", "lib_linux.cc", "lib_nvidia_nvml.cc"],
                     "include_dirs": ["./node_modules/node-addon-api"],
                     "link_settings": {
                         "libraries": [
@@ -44,7 +48,7 @@
         "OS=='mac'", {
             "targets": [{
                     "target_name": "node_ps_data",
-                    "sources": ["napi.cc", "lib_mac.cc", "lib_nvml_stub.cc"],
+                    "sources": ["napi.cc", "lib_mac.cc", "lib_nvidia_stub.cc"],
                     "include_dirs": ["./node_modules/node-addon-api"],
                     "cflags!": [ "-fno-exceptions" ],
                     "cflags_cc!": [ "-fno-exceptions" ],
