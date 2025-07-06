@@ -10,7 +10,8 @@
                     ],
                     "include_dirs": [
                         "./node_modules/node-addon-api",
-                        "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.9/include"
+                        "<!(echo %CUDA_PATH%)/include",
+                        "<!(echo %CONDA_PREFIX%)/Library/include",
                     ],
                     "ldflags": [
                         "-lpsapi", # gcc/g++
@@ -18,7 +19,18 @@
                     ],
                     "link_settings": {
                         "libraries": [
-                            "psapi.lib" # msvc
+                            "psapi.lib", # msvc
+                        ],
+                        "variables": {
+                            'has_cuda_path': '<!(if defined CUDA_PATH (echo 1) else (echo 0))',
+                        },
+                        "conditions": [
+                            ['has_cuda_path==1', { # normal cuda toolkit install (used locally)
+                                "libraries": ["<!(echo %CUDA_PATH%)/lib/x64/nvml.lib"],
+                            }],
+                            ['has_cuda_path==0', { # conda (used in github actions)
+                                "libraries": ["<!(echo %CONDA_PREFIX%)/Library/lib/nvml.lib"],
+                            }],
                         ]
                     },
                     "cflags!": [ "-fno-exceptions" ],

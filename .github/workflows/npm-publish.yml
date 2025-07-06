@@ -24,13 +24,20 @@ jobs:
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: '16'
       - run: |
           sudo apt-get install -y nvidia-driver-535
           sudo apt-get install -y libnvidia-ml-dev
         if: matrix.kernel == 'linux-x64'
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: nvml-tools
+        if: matrix.kernel == 'win32-x64'
+      - run: |
+          conda install cuda-nvml-dev -c nvidia/label/cuda-12.9.1
+        if: matrix.kernel == 'win32-x64'
       - run: npm run install-dependencies
       - run: npm run prebuild
       - uses: actions/upload-artifact@v4
@@ -76,19 +83,22 @@ jobs:
     runs-on: ${{ matrix.image }}
     needs: [pack-module]
     steps:
-      - uses: actions/setup-node@v2
       - uses: actions/checkout@v3
         name: Fetch tests
         with:
           sparse-checkout: |
             test/
           sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v2
       - uses: actions/download-artifact@v4
         name: Load bundled module
         id: download-module
         with:
           name: package
-      - run: npm i ${{ needs.pack-module.outputs.tgz_name }}
+      - run: ls
+      - run: |
+          npm init -y
+          npm i ${{ needs.pack-module.outputs.tgz_name }}
       
       - name: Basic CPU Test | Build Test
         run: npm exec tsc ./test/test_cpu_basic.ts
